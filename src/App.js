@@ -4,7 +4,7 @@ import queryString from 'query-string';
 
 let defaultStyle = {
   color: '#fff'
-}
+};
 let fakeServerData = {
   user: {
     name: 'Tasha',
@@ -30,6 +30,7 @@ class PlaylistCounter extends Component {
     );
   }
 }
+
 class HoursCounter extends Component {
   render () {
     let allSongs = this.props.playlists.reduce((songs, eachPlaylist) => {
@@ -101,11 +102,14 @@ class App extends Component {
       headers: {'Authorization': 'Bearer ' + accessToken}
     }).then(response => response.json())
     .then(data => this.setState({
-      playlists: data.items.map(item => ({
-        name: item.name,
-        imageUrl: item.images[0].url, 
-        songs: []
-      }))
+      playlists: data.items.map(item => {
+        console.log(data.items)
+        return {
+          name: item.name,
+          imageUrl: item.images[0].url, 
+          songs: []
+        }
+      })
     }))
 
   }
@@ -115,8 +119,8 @@ class App extends Component {
       this.state.playlists 
         ? this.state.playlists.filter(playlist => 
           playlist.name.toLowerCase().includes(
-            this.state.filterString.toLowerCase())
-        ) : []
+            this.state.filterString.toLowerCase()))
+        : []
     return (
       <div className="App">
         {this.state.user ? 
